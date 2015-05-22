@@ -11,7 +11,7 @@
               <use>standard</use>
               <args>
                  <module>mailPerformance</module>
-                 <frontName>MailPreforlance</frontName>
+                 <frontName>MailPerformance</frontName>
               </args>
            </routeurfrontend>
        </routers>
