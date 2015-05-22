@@ -1,2 +1,2 @@
-# MailChimp
-Observation du pluging magento
+# MailPerformance
+création du plugin MailPerformance
