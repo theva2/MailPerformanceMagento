@@ -7,8 +7,8 @@
         </mailPerformance_tab>
     </tabs>
     <sections>
-        <mailPerformance_section translate="label">
-            <label>Paramétrage</label>
+        <mailPerformance_authentification_section translate="label">
+            <label>Authentification</label>
             <sort_order>200</sort_order>
             <show_in_default>1</show_in_default>
             <show_in_website>1</show_in_website>
@@ -24,8 +24,8 @@
                     <show_in_store>1</show_in_store>
                     <fields>
                         <mailPerformance_field translate="commentaire du label">
-                            <label>KeyField</label>
-                            <comment>some keys</comment>
+                            <label>Authentification key</label>
+                            <comment>API Authentification key</comment>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
@@ -34,6 +34,16 @@
                     </fields>
                 </mailPerformance_group>
             </groups>
-        </mailPerformance_section>
+        </mailPerformance_authentification_section>
+    </sections>
+    <sections>
+         <mailPerformance_dataBinding_section translate="label">
+            <label>Data binding</label>
+            <sort_order>200</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <tab>mailPerformance_tab</tab>
+        </mailPerformance_dataBinding_section>
     </sections>
 </config>
