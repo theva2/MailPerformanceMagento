@@ -4,7 +4,8 @@ class np6_mailPerformance_IndexController extends Mage_Core_Controller_Front_Act
 {
    public function indexAction()
    {
-     echo 'test index' ;
+     	$this->loadLayout();
+      	$this->renderLayout();
    }
    public function mamethodeAction()
    {

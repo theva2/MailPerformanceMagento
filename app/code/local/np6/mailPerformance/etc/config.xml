@@ -15,5 +15,20 @@
               </args>
            </routeurfrontend>
        </routers>
+       <layout>
+          <updates>
+            <mailPerformance>
+             <file>mailPerformance.xml</file>
+            </mailPerformance>
+          </updates>
+        </layout>
     </frontend>
+    <global>
+     <blocks>
+         <mailPerformance>
+              <class>np6_mailPerformance_Block</class>
+         </mailPerformance>
+      </blocks>
+</global>
+
 </config>

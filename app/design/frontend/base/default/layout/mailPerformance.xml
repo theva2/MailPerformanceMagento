@@ -1,0 +1,12 @@
+<layout version="0.1.0">
+     <default>
+          <reference name="content">
+          </reference>
+      </default>
+      <routeurfrontend_index_index>
+           <reference name="content">
+                <block type="mailPerformance/Monblock"  name="afficher_monbloc"
+                          template="mailPerformance/afficher.phtml" />
+           </reference>
+      </routeurfrontend_index_index>
+</layout>
