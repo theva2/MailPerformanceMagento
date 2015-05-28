@@ -9,7 +9,7 @@ class np6_mailPerformance_IndexController extends Mage_Core_Controller_Front_Act
    }
    public function mamethodeAction()
    {
-     echo 'test mamethode';
+     echo "test mamethode";
     }
 }
 

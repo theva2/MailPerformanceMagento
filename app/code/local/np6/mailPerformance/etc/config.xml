@@ -24,11 +24,43 @@
         </layout>
     </frontend>
     <global>
-     <blocks>
-         <mailPerformance>
-              <class>np6_mailPerformance_Block</class>
-         </mailPerformance>
-      </blocks>
-</global>
+       <blocks>
+           <mailPerformance>
+                <class>np6_mailPerformance_Block</class>
+           </mailPerformance>
+        </blocks>
+
+        <models>
+          <mailPerformance>
+               <class>np6_mailPerformance_Model</class>
+               <resourceModel>mailPerformance_mysql4</resourceModel>
+           </mailPerformance>
+          <mailPerformance_mysql4>
+               <class>np6_mailPerformance_Model_Mysql4</class>
+               <entities>
+                   <mailPerformance>
+                     <table>np6_mailPerformance</table>
+                   </mailPerformance>
+                </entities>
+          </mailPerformance_mysql4>
+          </models>
+              <!-- permet au module de lire et ecrire -->
+          <resources>
+                  <!-- connection pour ecrire -->
+                  <mailPerformance_write>
+                      <connection>
+                          <use>core_write</use>
+                      </connection>
+                  </mailPerformance_write>
+                  <!-- connection pour lire-->
+                 <mailPerformance_read>
+                    <connection>
+                       <use>core_read</use>
+                    </connection>
+                 </mailPerformance_read>
+          </resources>
+          <!-- -/- -->
+
+    </global>
 
 </config>
