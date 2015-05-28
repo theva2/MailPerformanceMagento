@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<config>
+    <tabs>
+        <mailPerformance_tab translate="label">
+            <label>mailPerformance</label>
+            <sort_order>100</sort_order>
+        </mailPerformance_tab>
+    </tabs>
+    <sections>
+        <mailPerformance_section translate="label">
+            <label>Paramétrage</label>
+            <sort_order>200</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <tab>mailPerformance_tab</tab>
+            <groups>
+                <mailPerformance_group translate="label">
+                    <label>Authentification</label>
+                    <comment></comment>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <mailPerformance_field translate="commentaire du label">
+                            <label>KeyField</label>
+                            <comment>some keys</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_input>text</frontend_input>
+                        </mailPerformance_field>
+                    </fields>
+                </mailPerformance_group>
+            </groups>
+        </mailPerformance_section>
+    </sections>
+</config>

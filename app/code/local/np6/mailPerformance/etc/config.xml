@@ -39,6 +39,27 @@
       </routers>
     </admin>
     <adminhtml>
+      <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <mailPerformance_section translate="title">
+                                        <title>Paramétrage</title>
+                                        <sort_order>100</sort_order>
+                                    </mailPerformance_section>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                 </children>
+            </admin>
+        </resources>
+    </acl>
+
      <layout>
           <updates>
             <mailPerformance>
