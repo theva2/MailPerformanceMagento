@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+  <config>
+     <modules>
+        <Pfay_Test>
+          <version>1.0.0</version>
+        </Pfay_Test>
+     </modules>
+     <frontend>
+       <routers>
+          <routeurfrontend>
+              <use>standard</use>
+              <args>
+                 <module>Pfay_Test</module>
+                 <frontName>test</frontName>
+              </args>
+           </routeurfrontend>
+       </routers>
+    </frontend>
+</config>

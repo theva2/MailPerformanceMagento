@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
    <config>
       <modules>
-        <mailPerformance>
+        <Pfay_Test>
             <active>true</active>
             <codePool>local</codePool>
-         </mailPerformance>
+         </Pfay_Test>
        </modules>
     </config>

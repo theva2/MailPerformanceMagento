@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+  <config>
+     <modules>
+        <np6_mailPerformance>
+          <version>1.0.0</version>
+        </np6_mailPerformance>
+     </modules>
+     <frontend>
+       <routers>
+          <routeurfrontend>
+              <use>standard</use>
+              <args>
+                 <module>np6_mailPerformance</module>
+                 <frontName>mailPerformance</frontName>
+              </args>
+           </routeurfrontend>
+       </routers>
+    </frontend>
+</config>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+   <config>
+      <modules>
+        <np6_mailPerformance>
+            <active>true</active>
+            <codePool>local</codePool>
+         </np6_mailPerformance>
+       </modules>
+    </config>
