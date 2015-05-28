@@ -14,9 +14,8 @@ class np6_mailPerformance_Block_Monblock extends Mage_Core_Block_Template
              $retour .= $data->getData("nom").' '.$data->getData("prenom")
                      .' '.$data->getData("telephone")."<br />";
          }
-         //je renvoi un message de succes a l'utilisateur (juste pour que vous sachiez utiliser la fonction)
-         Mage::getSingleton("adminhtml/session")->addSuccess("Cool Ca marche !!");
-         return $retour;
+         
+        return $retour;
 
      }
 }

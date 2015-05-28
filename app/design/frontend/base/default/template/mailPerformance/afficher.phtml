@@ -1,4 +1,25 @@
+<form action="<?php echo Mage::getUrl('mailPerformance/index/save') ?>" method="post">
+  <fieldset>
+    <ul>
+     <li>
+       <label for="nom">First name</label>
+       <input type="text" id="nom" name="nom" />
+     </li>
+     <li>
+         <label for="prenom ">Last name</label>
+         <input type="text" id="prenom" name="prenom" />
+     </li>
+     <li>
+        <label for="nom">Phone</label>
+        <input type="text" id="telephone" name="telephone" />
+    </li>
+     <li>
+        <input type="submit" value="Save" />
+    </li>
+  </ul>
+ </fieldset>
+</form>
+
 <?php
-    echo $this->methodblock();
-?>
- 
+echo $this->methodblock();
+ ?>
