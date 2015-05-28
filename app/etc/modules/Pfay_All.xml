@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-   <config>
-      <modules>
-        <Pfay_Test>
-            <active>true</active>
-            <codePool>local</codePool>
-         </Pfay_Test>
-       </modules>
-    </config>

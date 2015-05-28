@@ -23,6 +23,46 @@
           </updates>
         </layout>
     </frontend>
+
+
+
+
+    <admin>
+     <routers>
+         <mailPerformance>
+            <use>admin</use>
+            <args>
+               <module>np6_mailPerformance</module>
+               <frontName>adminMP</frontName>
+            </args>
+         </mailPerformance>
+      </routers>
+    </admin>
+    <adminhtml>
+     <layout>
+          <updates>
+            <mailPerformance>
+             <file>mailPerformance.xml</file>
+            </mailPerformance>
+          </updates>
+      </layout>
+     <menu>
+        <mailPerformance translate="title" module="adminhtml">
+           <title>MailPerformance</title>
+           <sort_order>100</sort_order>
+           <children>
+               <set_time>
+                     <title>test</title>
+                     <action>adminMP/adminhtml_index</action>
+                </set_time>
+            </children>
+         </mailPerformance>
+      </menu>
+    </adminhtml>
+
+
+
+
     <global>
        <blocks>
            <mailPerformance>

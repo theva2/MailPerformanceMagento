@@ -3,6 +3,7 @@ class np6_mailPerformance_Block_Monblock extends Mage_Core_Block_Template
 {
      public function methodblock()
      {
+
           //on initialize la variable
         $retour='';
 
