@@ -133,7 +133,7 @@ class np6_mailPerformance_Model_MPAPI
 	public function convertFromJson($json)
 	{
 		$json = preg_replace('/new\ Date\(([0-9]+)\)/', '$1', $json); // remove the new date for a valid Json
-		return  json_encode($json, true);
+		return  json_decode($json, true);
 	}
 
 	/**

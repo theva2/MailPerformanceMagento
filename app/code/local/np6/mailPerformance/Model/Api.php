@@ -10,6 +10,7 @@ class np6_mailPerformance_Model_Api
 	var $rest_client;
 	var $ContactsConnector;
 	var $user_id;
+	var $authKeys;
 
 	public function __construct()
 	{
@@ -47,22 +48,22 @@ class np6_mailPerformance_Model_Api
 
 		if ($error)
 		{
-			echo("<script>console.log(\"ValideAuthKey:Error\")</script>");
 			$this->getIdentityInfo($result);
-			$this->authkey = null;
+			$this->authkeys = null;
 			return;
 		}
 
-		// check connection et get user infos
+		// check connection and get user infos
 		if ($result && APIConnector::verifNoError($result) == '')
 		{
-			echo("<script>console.log(\"ValideAuthKey:trust\")</script>");
-			echo("<script>console.log(".$result.")</script>");
-			$this->getIdentityInfo($result);
-			return;
+			//echo("<script>console.log(".$result.")</script>");
+			if($this->getIdentityInfo($result))
+			{
+				$this->authkeys = $key;
+				return;
+			}
 		}
-
-		$this->authkey = null;
+		$this->authkeys = null;
 		return;
 	}
 
@@ -70,22 +71,30 @@ class np6_mailPerformance_Model_Api
 	{
 		if (isset($result['response']['identity']))
 		{
-			echo("<script>console.log(\"getIdentityInfo\")</script>");
-				$this->user_id = $result['response']['identity']['contact'];
+			$this->user_id = $result['response']['identity']['contact'];
+		 	return true;
 		}
+		$this->user_id = null;
+		return false;
 	}
 
-
 	public function getContact()
-	{
+	{	
+		if(!(isset($this->authkeys)) || ($this->authkeys != Mage::getStoreConfig('mailPerformance_authentification_section/mailPerformance_group/apikey_field')) )
+		{
+			$this->ValideAuthKey(Mage::getStoreConfig('mailPerformance_authentification_section/mailPerformance_group/apikey_field'));
+		}
+
 		if(isset($this->user_id))
 		{
-			echo("<script>console.log(\"getContact\")</script>");
-
-
 			$contact = $this->ContactsConnector->getContactById($this->user_id);
 
-			return $arrayName = array('mail' => $contact->email );
+			return $arrayName = array(
+				'mail' => $contact->email, 
+				'firstname' => $contact->identity->first_name,
+				'lastname' => $contact->identity->last_name,
+				'expire' => $contact->expire,
+				);
 		}
 
 		return false;	
