@@ -62,7 +62,7 @@ class np6_mailPerformance_Model_MPAPI
 		if (!empty($contents))
 		{
 			curl_setopt($req, CURLOPT_POSTFIELDS, $contents);
-			$httpheaders[1] = 'Content-Length: '.Tools::strlen($contents);
+			$httpheaders[1] = 'Content-Length: '.strlen($contents);
 		}
 		if (!empty($this->xkey))
 			$httpheaders[2] = 'X-Key: '.$this->xkey;
@@ -102,7 +102,7 @@ class np6_mailPerformance_Model_MPAPI
 		curl_setopt($req, CURLOPT_COOKIEJAR, COOKIE_FILE); // save cookies
 		curl_setopt($req, CURLOPT_HTTPHEADER, array (
 				'Content-Type: application/json',
-				'Content-Length: '.Tools::strlen($data_string)
+				'Content-Length: '.strlen($data_string)
 		));
 		$result = curl_exec($req);
 
@@ -120,7 +120,7 @@ class np6_mailPerformance_Model_MPAPI
 	public function convertToJson($object)
 	{
 		// transform the array in Json
-		$json = Tools::jsonEncode($object);
+		$json = json_encode($object);
 		$json = preg_replace('/"ISODate\(\\\"([T0-9:\-]+Z)\\\"\)"/', 'ISODate("$1")', $json); // add dates
 
 		return $json;
@@ -133,7 +133,7 @@ class np6_mailPerformance_Model_MPAPI
 	public function convertFromJson($json)
 	{
 		$json = preg_replace('/new\ Date\(([0-9]+)\)/', '$1', $json); // remove the new date for a valid Json
-		return Tools::jsonDecode($json, true);
+		return  json_encode($json, true);
 	}
 
 	/**

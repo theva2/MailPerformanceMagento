@@ -1,31 +1,28 @@
 <?php
 
-require_once (__Dir__.'/Request.php');
-
+require_once (__Dir__.'/MPAPI.php');
+require_once (__Dir__.'/APIConnector.class.php');
+require_once (__Dir__.'/ContactsConnector.class.php');
+require_once (__Dir__.'/modelMP/Contact.class.php');
 
 class np6_mailPerformance_Model_Api
 {
-	var $authkey;
 	var $rest_client;
+	var $ContactsConnector;
+	var $user_id;
 
 	public function __construct()
 	{
-		$this->rest_client = new RequestRest();
+		$this->rest_client = new np6_mailPerformance_Model_MPAPI();
+		$this->ContactsConnector = new ContactsConnector($this->rest_client);
 
-		// check arguments
-		$ctp = func_num_args();
-		$args = func_get_args();
-		if ($ctp == 1)
+
+		$key = Mage::getStoreConfig('mailPerformance_authentification_section/mailPerformance_group/apikey_field');
+
+		if($key != null && $key != "")
 		{
-			if (Tools::strlen($args[0]) == 112)
-			{
-				$this->ValideAuthKey($args[0])
-			}
-			else
-			{
-				$this->authkey = null;
-			}
-		}
+			$this->ValideAuthKey($key);
+		}		
 	}
 
 	public function ValideAuthKey($key)
@@ -36,7 +33,7 @@ class np6_mailPerformance_Model_Api
 				'version' => 1
 			),
 			'parameters' => array(
-				'alKey' => $this->auto_login_key
+				'alKey' => $key
 			),
 			'debug' => array(
 				'forceSync' => true
@@ -50,6 +47,8 @@ class np6_mailPerformance_Model_Api
 
 		if ($error)
 		{
+			echo("<script>console.log(\"ValideAuthKey:Error\")</script>");
+			$this->getIdentityInfo($result);
 			$this->authkey = null;
 			return;
 		}
@@ -57,7 +56,9 @@ class np6_mailPerformance_Model_Api
 		// check connection et get user infos
 		if ($result && APIConnector::verifNoError($result) == '')
 		{
-			$this->authkey = $key;
+			echo("<script>console.log(\"ValideAuthKey:trust\")</script>");
+			echo("<script>console.log(".$result.")</script>");
+			$this->getIdentityInfo($result);
 			return;
 		}
 
@@ -65,5 +66,29 @@ class np6_mailPerformance_Model_Api
 		return;
 	}
 
+	private function getIdentityInfo($result)
+	{
+		if (isset($result['response']['identity']))
+		{
+			echo("<script>console.log(\"getIdentityInfo\")</script>");
+				$this->user_id = $result['response']['identity']['contact'];
+		}
+	}
+
+
+	public function getContact()
+	{
+		if(isset($this->user_id))
+		{
+			echo("<script>console.log(\"getContact\")</script>");
+
+
+			$contact = $this->ContactsConnector->getContactById($this->user_id);
+
+			return $arrayName = array('mail' => $contact->email );
+		}
+
+		return false;	
+	}
 
 }
