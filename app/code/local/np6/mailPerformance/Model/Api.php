@@ -100,4 +100,18 @@ class np6_mailPerformance_Model_Api
 		return false;	
 	}
 
+	public function isConnected()
+	{
+		if($authKeys != null || $authKeys != " ")
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+
 }
