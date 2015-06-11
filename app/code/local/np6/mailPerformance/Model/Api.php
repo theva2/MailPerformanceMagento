@@ -182,30 +182,18 @@ class np6_mailPerformance_Model_Api
 		}
 	}
 
-	public function isAllUnitObligFieldUse()
+	//prend en parametre le tableau des id de champs selectionner
+	public function isAllUnitObligFieldUse($idarray)
 	{
 
 		$this->ConnectIfNot();
 
 		// on récupère tous les fields
 		$arrayAllField =  array(TypeField::LISTE,TypeField::CHECKBOX,TypeField::EMAIL,TypeField::TEL,TypeField::TEXTAREA,TypeField::NUMERIC,TypeField::STRING,TypeField::DATE);
-
 		$allFields = $this->fields->getListFieldsByType($arrayAllField) ;
 
-		// on récupère tous les fields selectionné
-		$idarray = array(
-							'id' => Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/id_field'),
-							'lastname' => Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/lastname_field'),
-							'firstname' => Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/firstname_field'),
-							'gender' => Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/gender_field'),
-							'email' => Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/email_field'),
-							'newsletterDate' => Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/suscriptionDate_field'),
-							'birthday' => Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/birthday_field'),
-							'ThirdPArtyOffers' => Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/optin_field'),
-						);
 
-	
-
+		//on récupère les fields selectionné
 		$arraySelectedField = array();
 		foreach ($idarray as $key => $value) {
 			$arraySelectedField[] = $this->fields->getFieldById($value);
@@ -248,6 +236,18 @@ class np6_mailPerformance_Model_Api
 		}
 		
 		return $arrayId;
+	}
+
+	public function isConnected()
+	{
+		if((isset($this->authkeys)) && $this->authkeys != "")
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 

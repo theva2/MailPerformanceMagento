@@ -1,24 +1,15 @@
-
-<form action="<?php echo Mage::getUrl('adminMP/adminhtml_index/save') ?>" method="post">
-  <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>"/>
+<form action="<?php echo Mage::getUrl('mailPerformance/index/save') ?>" method="post">
   <fieldset>
     <ul>
-      <li>
-       <label for="nom">First name</label>
-       <input type="text" id="nom" name="nom" />
-      </li>
-      <li>
-         <label for="prenom ">Last name</label>
-         <input type="text" id="prenom" name="prenom" />
-      </li>
-      <li>
-        <label for="nom">Phone</label>
-        <input type="text" id="telephone" name="telephone" />
-      </li>
-      <li>
-        <input type="submit" value="Save" />
-      </li>
-    </ul>
+     <li>
+       <label for="id_magento">id magento</label>
+       <input type="text" id="id_magento" name="id_magento" />
+     </li>
+     <li>
+         <label for="id_mailPerf ">id mailPerf</label>
+         <input type="text" id="id_mailPerf" name="id_mailPerf" />
+     </li>
+  </ul>
  </fieldset>
 </form>
 

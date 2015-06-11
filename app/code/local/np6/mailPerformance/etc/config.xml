@@ -1,10 +1,13 @@
 <?xml version="1.0"?>
   <config>
+    
      <modules>
         <np6_mailPerformance>
           <version>1.0.0</version>
         </np6_mailPerformance>
      </modules>
+
+
      <frontend>
        <routers>
           <routeurfrontend>
@@ -58,36 +61,37 @@
                  </children>
             </admin>
         </resources>
-    </acl>
+      </acl>
 
-    <acl>
-      <resources>
-        <admin>
-              <children>
-                <system>
-                  <children>
-                    <config>
-                      <children>
-                        <mailPerformance_dataBinding_section translate="title">
-                        <title>Data binding</title>
-                        <sort_order>300</sort_order>
-                        </mailPerformance_dataBinding_section>
-                      </children>
-                    </config>
-                  </children>
-                </system>
-              </children>
-            </admin>
-      </resources>
-    </acl>
+      <acl>
+        <resources>
+          <admin>
+                <children>
+                  <system>
+                    <children>
+                      <config>
+                        <children>
+                          <mailPerformance_dataBinding_section translate="title">
+                            <title>Data binding</title>
+                            <sort_order>300</sort_order>
+                          </mailPerformance_dataBinding_section>
+                        </children>
+                      </config>
+                    </children>
+                  </system>
+                </children>
+              </admin>
+        </resources>
+      </acl>
 
-     <layout>
-          <updates>
-            <mailPerformance>
-             <file>mailPerformance.xml</file>
-            </mailPerformance>
-          </updates>
+      <layout>
+            <updates>
+              <mailPerformance>
+               <file>mailPerformance.xml</file>
+              </mailPerformance>
+            </updates>
       </layout>
+
      <menu>
         <mailPerformance translate="title" module="adminhtml">
            <title>MailPerformance</title>
@@ -100,9 +104,8 @@
             </children>
          </mailPerformance>
       </menu>
+
     </adminhtml>
-
-
 
 
     <global>
@@ -126,6 +129,19 @@
                 </entities>
           </mailPerformance_mysql4>
           </models>
+
+          <events>
+            <adminhtml_init_system_config>
+                <observers>
+                    <np6_init_system_config>
+                        <class>np6_mailPerformance_model_observer</class>
+                        <method>changeSystemConfig</method>
+                    </np6_init_system_config>
+                </observers>
+            </adminhtml_init_system_config>
+        </events>
+
+
               <!-- permet au module de lire et ecrire -->
           <resources>
                   <!-- connection pour ecrire -->

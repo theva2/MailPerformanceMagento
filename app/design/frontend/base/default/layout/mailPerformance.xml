@@ -5,7 +5,7 @@
       </default>
       <routeurfrontend_index_index>
            <reference name="content">
-                <block type="mailPerformance/Monblock"  name="afficher_monbloc"
+                <block type="mailPerformance/MonBlock"  name="afficher_monbloc"
                           template="mailPerformance/afficher.phtml" />
            </reference>
       </routeurfrontend_index_index>

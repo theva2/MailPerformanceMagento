@@ -7,10 +7,6 @@ class np6_mailPerformance_IndexController extends Mage_Core_Controller_Front_Act
      	$this->loadLayout();
       	$this->renderLayout();
    }
-   public function mamethodeAction()
-   {
-     echo "test mamethode";
-    }
 
 	public function saveAction()
 	{
