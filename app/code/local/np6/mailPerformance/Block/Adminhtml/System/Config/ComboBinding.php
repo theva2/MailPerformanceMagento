@@ -1,6 +1,6 @@
  <?php
 
-/* block to print distinctValues combobox  */
+/* block to print combobox for the data binding as field */
 class np6_mailPerformance_Block_Adminhtml_System_Config_ComboBinding
     extends Mage_Adminhtml_Block_System_Config_Form_Field
 {

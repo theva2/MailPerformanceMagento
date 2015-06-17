@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+	<!-- module definition -->
    <config>
       <modules>
         <np6_mailPerformance>

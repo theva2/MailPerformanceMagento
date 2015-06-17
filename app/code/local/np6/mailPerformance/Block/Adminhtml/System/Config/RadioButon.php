@@ -1,0 +1,29 @@
+ <?php
+
+/* block to use radio button as field */
+class np6_mailPerformance_Block_Adminhtml_System_Config_RadioButon extends Mage_Adminhtml_Block_System_Config_Form_Field
+{
+    protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
+    {
+        //all the possibility
+        $values = $element->getValues();
+        //current selected
+        $Selectedvalue = $element->getValue();
+
+        $html = '<form  id="'.$element->getHtmlId().'" name="'.$element->getName().'" style="margin-left : 30px; width : 250px;">';
+
+        foreach ($values as $val) {
+
+            $selected = "";
+            if ($val['value'] == $Selectedvalue['value'])
+            {
+                $selected= ' checked';
+            }
+
+            $html .= "<input type=radio name=\"".$element->getName()."\" value=\"{$val['value']}\" ".$selected."> {$val['label']}</br>";
+        }
+        $html .= '</form>';
+
+        return $html;
+    }
+}

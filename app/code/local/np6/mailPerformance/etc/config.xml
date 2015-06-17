@@ -1,36 +1,16 @@
 <?xml version="1.0"?>
   <config>
     
+    <!-- Module definition -->
      <modules>
         <np6_mailPerformance>
           <version>1.0.0</version>
         </np6_mailPerformance>
      </modules>
 
-
-     <frontend>
-       <routers>
-          <routeurfrontend>
-              <use>standard</use>
-              <args>
-                 <module>np6_mailPerformance</module>
-                 <frontName>mailPerformance</frontName>
-              </args>
-           </routeurfrontend>
-       </routers>
-       <layout>
-          <updates>
-            <mailPerformance>
-             <file>mailPerformance.xml</file>
-            </mailPerformance>
-          </updates>
-        </layout>
-    </frontend>
-
-
-
-
+     <!-- admin panel information  -->
     <admin>
+     <!-- frontname access in admin panel -->
      <routers>
          <mailPerformance>
             <use>admin</use>
@@ -41,6 +21,8 @@
          </mailPerformance>
       </routers>
     </admin>
+
+    <!-- System>configuration panel-->
     <adminhtml>
       <acl>
         <resources>
@@ -72,7 +54,7 @@
                       <config>
                         <children>
                           <mailPerformance_dataBinding_section translate="title">
-                            <title>Data binding</title>
+                            <title>Configuration</title>
                             <sort_order>300</sort_order>
                           </mailPerformance_dataBinding_section>
                         </children>
@@ -108,6 +90,7 @@
     </adminhtml>
 
 
+    <!-- global neded information -->
     <global>
        <blocks>
            <mailPerformance>
@@ -131,15 +114,40 @@
           </models>
 
           <events>
+            <!-- Auth key event -->
             <adminhtml_init_system_config>
                 <observers>
                     <np6_init_system_config>
                         <class>np6_mailPerformance_model_observer</class>
                         <method>changeSystemConfig</method>
-                    </np6_init_system_config>
+                    </np6_init_system_config>                
                 </observers>
             </adminhtml_init_system_config>
-        </events>
+
+            <!-- User update event-->
+            <customer_save_before>
+              <observers>
+                <np6_mailPerformance_customer_save_before>  
+                    <type>singleton</type>                         
+                    <class>np6_mailPerformance_model_observer</class>
+                    <method>customerSaveBefore</method>
+                </np6_mailPerformance_customer_save_before>
+              </observers>
+             </customer_save_before>
+
+            <!-- user inscription event -->
+            <customer_register_success>
+              <observers>
+                <np6_mailPerformance_customer_register_success>
+                  <type>singleton</type>
+                  <class>np6_mailPerformance_model_observer</class>
+                  <method>customerRegisterSuccess</method>
+                </np6_mailPerformance_customer_register_success>              
+              </observers>
+            </customer_register_success>
+
+            
+          </events>
 
 
               <!-- permet au module de lire et ecrire -->

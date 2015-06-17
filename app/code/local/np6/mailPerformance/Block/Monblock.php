@@ -1,4 +1,7 @@
 <?php
+
+
+//block de test pour ajouter des valeur manuellement dans la base de donnée
 class np6_mailPerformance_Block_Monblock extends Mage_Core_Block_Template
 {
      public function methodblock()
@@ -7,15 +10,14 @@ class np6_mailPerformance_Block_Monblock extends Mage_Core_Block_Template
         $retour='';
 
         $collection = Mage::getModel("mailPerformance/mailPerformance")->getCollection()
-                                 ->setOrder("id_np6_mailPerformance","asc");
+                                 ->setOrder("id_magento","asc");
 
         foreach($collection as $data)
         {
-             $retour .= $data->getData("nom").' '.$data->getData("prenom")
-                     .' '.$data->getData("telephone")."<br />";
+             $retour .= 'id magento = '. $data->getData("id_magento").' and id mailPerf ='.$data->getData("id_mailperf")
+                     ."<br />";
          }
-         //je renvoi un message de succes a l'utilisateur (juste pour que vous sachiez utiliser la fonction)
-         Mage::getSingleton("adminhtml/session")->addSuccess("Cool Ca marche !!");
+         
          return $retour;
 
      }

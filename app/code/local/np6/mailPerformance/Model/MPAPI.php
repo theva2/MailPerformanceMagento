@@ -123,6 +123,8 @@ class np6_mailPerformance_Model_MPAPI
 		$json = json_encode($object);
 		$json = preg_replace('/"ISODate\(\\\"([T0-9:\-]+Z)\\\"\)"/', 'ISODate("$1")', $json); // add dates
 
+		Mage::Log("Json encode = ".$json);
+
 		return $json;
 	}
 

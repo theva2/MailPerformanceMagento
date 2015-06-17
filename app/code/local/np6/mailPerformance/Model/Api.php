@@ -8,15 +8,27 @@ require_once (__Dir__.'/FieldsConnector.class.php');
 require_once (__Dir__.'/modelMP/Field.class.php');
 require_once (__Dir__.'/ValueListConnector.class.php');
 require_once (__Dir__.'/modelMP/ValueList.class.php');
+require_once (__Dir__.'/SegmentsConnector.class.php');
+require_once (__Dir__.'/modelMP/Segment.class.php');
+require_once (__Dir__.'/modelMP/Target.class.php');
+require_once (__Dir__.'/TargetsConnector.class.php');
+
+
 
 class np6_mailPerformance_Model_Api
 {
+	// rest to request
 	var $rest_client;
-	var $ContactsConnector;
+	// var nedded 
 	var $user_id;
 	var $authKeys;
+	// all connector use
+	var $ContactsConnector;
 	var $fields;
 	var $value_list;
+	var $segments;
+	var $targets;
+
 
 	public function __construct()
 	{
@@ -32,6 +44,8 @@ class np6_mailPerformance_Model_Api
 		$this->ContactsConnector = new ContactsConnector($this->rest_client);
 		$this->fields = new FieldsConnector($this->rest_client);
 		$this->value_list = new ValueListConnector($this->rest_client);
+		$this->segments = new SegmentsConnector($this->rest_client);
+		$this->targets = new TargetsConnector($this->rest_client);
 
 	}
 
@@ -59,7 +73,7 @@ class np6_mailPerformance_Model_Api
 		{
 			$this->getIdentityInfo($result);
 			$this->authkeys = null;
-			return;
+			return false;
 		}
 
 		// check connection and get user infos
@@ -68,11 +82,11 @@ class np6_mailPerformance_Model_Api
 			if($this->getIdentityInfo($result))
 			{
 				$this->authkeys = $key;
-				return;
+				return true;
 			}
 		}
 		$this->authkeys = null;
-		return;
+		return false;
 	}
 
 	private function getIdentityInfo($result)
@@ -86,6 +100,7 @@ class np6_mailPerformance_Model_Api
 		return false;
 	}
 
+	// get the contact information
 	public function getContact()
 	{	
 		$this->ConnectIfNot();
@@ -112,11 +127,14 @@ class np6_mailPerformance_Model_Api
 		return false;	
 	}
 
-
+	// get all field from type pass in parameters, accept string or array
 	public function getFieldType($type = null)
 	{
-		$this->ConnectIfNot();
-
+		if($this->ConnectIfNot() == false)
+		{
+			Mage::log("getFieldType Abort : No connection");
+			return;
+		}
 		if(isset($this->user_id) && $type != null)
 		{
 			if(! is_array($type))
@@ -134,13 +152,18 @@ class np6_mailPerformance_Model_Api
 		return false;	
 	}	
 
+	// get all value form a field value list
 	public function getValueList($fieldId)
 	{
-		$this->ConnectIfNot();
+		if($this->ConnectIfNot() == false)
+		{
+			Mage::log("getValueList Abort : No connection");
+			return;
+		}
 
 		if(isset($this->user_id) && $fieldId != null)
 		{
-			$field = $this->findField($fieldId);
+			$field = $this->findFieldValueList($fieldId);
 			if($field != null)
 			{
 				return $this->value_list->getValueListByField($field);
@@ -152,7 +175,29 @@ class np6_mailPerformance_Model_Api
 
 	}
 
-	public function findField($fieldId)
+
+	//get all the segement
+	public function getSegments()
+	{
+		if($this->ConnectIfNot() == false)
+		{
+			Mage::log("getSegments Abort : No connection");
+			return;
+		}
+
+		if(isset($this->user_id))
+		{
+			return $this->segments->getSegments();
+		}
+
+		return false;	
+
+
+	}
+
+
+	//find a field value liste with id
+	public function findFieldValueList($fieldId)
 	{
 		$array =  array(TypeField::LISTE,TypeField::CHECKBOX);
 		$allfields = $this->fields->getListFieldsByType($array) ;
@@ -174,19 +219,40 @@ class np6_mailPerformance_Model_Api
 		return null;
 	}
 
+	//test if connect
+	public function isConnected()
+	{
+		if((isset($this->authkeys)) && $this->authkeys != "")
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	//if authkeys not set or différent from config, try to connect 
 	public function ConnectIfNot()
 	{
 		if(!(isset($this->authkeys)) || ($this->authkeys != Mage::getStoreConfig('mailPerformance_authentification_section/mailPerformance_group/apikey_field')) )
 		{
-			$this->ValideAuthKey(Mage::getStoreConfig('mailPerformance_authentification_section/mailPerformance_group/apikey_field'));
+			return $this->ValideAuthKey(Mage::getStoreConfig('mailPerformance_authentification_section/mailPerformance_group/apikey_field'));
+		}
+		else
+		{
+			return $this->isConnected();
 		}
 	}
 
-	//prend en parametre le tableau des id de champs selectionner
-	public function isAllUnitObligFieldUse($idarray)
+	//Return a boolean, true if all field Oblige and Unicity field are use, else false
 	{
 
-		$this->ConnectIfNot();
+		if($this->ConnectIfNot() == false)
+		{
+			Mage::log("isAllUnitObligFieldUse Abort : No connection");
+			return;
+		}
 
 		// on récupère tous les fields
 		$arrayAllField =  array(TypeField::LISTE,TypeField::CHECKBOX,TypeField::EMAIL,TypeField::TEL,TypeField::TEXTAREA,TypeField::NUMERIC,TypeField::STRING,TypeField::DATE);
@@ -219,6 +285,7 @@ class np6_mailPerformance_Model_Api
 	}
 
 
+	// return a array with id of unicity/obligatory field
 	public function countObliUni (array $listField)
 	{
 		$arrayId = array();
@@ -238,16 +305,94 @@ class np6_mailPerformance_Model_Api
 		return $arrayId;
 	}
 
-	public function isConnected()
+
+	//Add a new target in MP, need a array of field and magento id
+	public function CreateNewTarget(array $TargetInformation,$id_magento)
 	{
-		if((isset($this->authkeys)) && $this->authkeys != "")
+		if($this->ConnectIfNot() == false)
 		{
-			return true;
+			Mage::log("Target Creation Abort : No connection");
+			return;
 		}
-		else
+
+		//tableau a envoyer a l'API
+		$send_array = array();
+
+		// on récupère tous les fields
+		$arrayAllField =  array(TypeField::LISTE,TypeField::CHECKBOX,TypeField::EMAIL,TypeField::TEL,TypeField::TEXTAREA,TypeField::NUMERIC,TypeField::STRING,TypeField::DATE);
+		$allFields = $this->fields->getListFieldsByType($arrayAllField) ;
+
+
+		foreach ($allFields as $field) {
+			if(isset($TargetInformation[$field->id]))
+			{
+				$send_array[$field->id] = $TargetInformation[$field->id];
+			}
+			else
+			{
+				if($field->type == 'multipleSelectList')
+				{
+					$send_array[$field->id] = array();
+				}
+				else
+				{
+					$send_array[$field->id] = null;
+				}
+			}
+		}
+
+		$target_result = $this->targets->createTarget($send_array);
+
+		if($target_result)
 		{
-			return false;
+			$contact = Mage::getModel('mailPerformance/mailPerformance');
+	      	$contact->addData(array('id_magento' => $id_magento, 'id_mailperf' => (string)$target_result->id));  
+	      	$contact->save();
 		}
+	}
+
+	//Update an existing target
+	public function UpdateTarget(array $TargetInformation,$id_mp)
+	{
+		if($this->ConnectIfNot() == false)
+		{
+			Mage::log("Target UpdateTarget Abort : No connection");
+			return;
+		}
+
+		//tableau a envoyer a l'API
+		$send_array = array();
+
+		// on récupère tous les fields
+		$arrayAllField =  array(TypeField::LISTE,TypeField::CHECKBOX,TypeField::EMAIL,TypeField::TEL,TypeField::TEXTAREA,TypeField::NUMERIC,TypeField::STRING,TypeField::DATE);
+		$allFields = $this->fields->getListFieldsByType($arrayAllField) ;
+
+
+		foreach ($allFields as $field) {
+			if(isset($TargetInformation[$field->id]))
+			{
+				$send_array[$field->id] = $TargetInformation[$field->id];
+			}
+			else
+			{
+				if($field->type == 'multipleSelectList')
+				{
+					$send_array[$field->id] = array();
+				}
+				else
+				{
+					$send_array[$field->id] = null;
+				}
+			}
+		}
+
+		 Mage::log("Customer Update, id mp = ".$id_mp);
+		 Mage::log("Customer Update, send array = ".$send_array);
+
+		$result = $this->targets->updateTargetFromValues($id_mp, $send_array);
+
+		Mage::log("Customer Update, result = ".$result);
+
 	}
 
 
