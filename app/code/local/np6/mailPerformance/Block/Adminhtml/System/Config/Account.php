@@ -1,5 +1,7 @@
 <?php
 
+
+// Show information of the customer 
 class np6_mailPerformance_Block_Adminhtml_System_Config_Account
     extends Mage_Adminhtml_Block_System_Config_Form_Field
 {

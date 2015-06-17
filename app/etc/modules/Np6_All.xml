@@ -2,6 +2,7 @@
 	<!-- module definition -->
    <config>
       <modules>
+      	<!-- namespace_nomDuModule -->
         <np6_mailPerformance>
             <active>true</active>
             <codePool>local</codePool>
