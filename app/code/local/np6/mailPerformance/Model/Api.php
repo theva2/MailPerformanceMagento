@@ -246,6 +246,7 @@ class np6_mailPerformance_Model_Api
 	}
 
 	//Return a boolean, true if all field Oblige and Unicity field are use, else false
+	public function isAllUnitObligFieldUse($idarray)
 	{
 
 		if($this->ConnectIfNot() == false)
