@@ -405,8 +405,12 @@ class np6_mailPerformance_Model_Api
 
 	public function getTargetWithId($id)
 	{
-		Mage::log($id);
 		return $this->targets->getTargetById($id);
+	}
+
+	public function addSegment($segment)
+	{
+		return $this->segments->createSegment($segment);
 	}
 
 
