@@ -129,7 +129,7 @@ class np6_mailPerformance_Model_Observer
                             <label>Add on segment</label>
                             <frontend_model>mailPerformance/adminhtml_system_config_comboBinding</frontend_model>
                             <source_model>mailPerformance/system_config_source_segment</source_model>
-                            <comment><![CDATA[<a target="_blank" href="http://v8.mailperformance.com/">Need to add a segment ?</a>]]></comment>
+                            <comment><![CDATA[<a target="_blank" href="../mailPerformance_action_section">Need to add a segment ?</a>]]></comment>
                             <sort_order>3</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -139,11 +139,60 @@ class np6_mailPerformance_Model_Observer
                 </UserLink_group>
             ');
 
+            $UpdateCart_group_xml = new Mage_Core_Model_Config_Element('
+                 <Event_UpdateCart_group translate="">
+                    <label>Event : Cart creation or update</label>
+                    <sort_order>4</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <segment_field>
+                            <label>Segment MailPerformance</label>
+                            <frontend_model>mailPerformance/adminhtml_system_config_comboBinding</frontend_model>
+                            <source_model>mailPerformance/system_config_source_segment</source_model>
+                            <comment><![CDATA[<a target="_blank" href="../mailPerformance_action_section">Need to add a segment ?</a>]]></comment>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </segment_field>
+                        <dateLastModif_field>
+                            <label>Cart last modification date :</label>
+                            <frontend_model>mailPerformance/adminhtml_system_config_comboBinding</frontend_model>
+                            <source_model>mailPerformance/system_config_source_date</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </dateLastModif_field>
+                        <cartItems_field>
+                            <label>Number of item in cart :</label>
+                            <frontend_model>mailPerformance/adminhtml_system_config_comboBinding</frontend_model>
+                            <source_model>mailPerformance/system_config_source_numeric</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cartItems_field>
+                        <cartPrice_field>
+                            <label>Cart price :</label>
+                            <frontend_model>mailPerformance/adminhtml_system_config_comboBinding</frontend_model>
+                            <source_model>mailPerformance/system_config_source_combo_AllText</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cartPrice_field>
+                    </fields>
+                </Event_UpdateCart_group>
+            ');
+
            
             $ExportCSV_group_xml = new Mage_Core_Model_Config_Element('
                 <ExportCSV_group translate="">
                     <label>Export CSV</label>
-                    <sort_order>4</sort_order>
+                    <sort_order>40</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
@@ -164,7 +213,7 @@ class np6_mailPerformance_Model_Observer
             $AddSegment_group_xml = new Mage_Core_Model_Config_Element('
                 <AddSegment_group translate="">
                     <label>Add Segment</label>
-                    <sort_order>5</sort_order>
+                    <sort_order>50</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
@@ -211,6 +260,7 @@ class np6_mailPerformance_Model_Observer
             //Section Configuration
             $adminSectionGroups->appendChild($dataBinding_group_xml);
             $adminSectionGroups->appendChild($userLink_group_xml);
+            $adminSectionGroups->appendChild($UpdateCart_group_xml);
             //Section Action
             $adminActionSectionGroups->appendChild($ExportCSV_group_xml);
             $adminActionSectionGroups->appendChild($AddSegment_group_xml);
@@ -285,7 +335,7 @@ class np6_mailPerformance_Model_Observer
         }
 
          Mage::log((new DateTime())->format('Y-m-d H:i:s')." CustomerRegister hook End");
-    }
+}
 
     public function customerSaveBefore(Varien_Event_Observer $observer)
     {
@@ -300,7 +350,6 @@ class np6_mailPerformance_Model_Observer
         $UserLink = Mage::getModel('mailPerformance/mailPerformance')->load($customer->getId());
         $Id_UserMP = $UserLink->getData('id_mailperf');
 
-        Mage::log("Customer Update, id mp = ".$Id_UserMP);
 
         if($Id_UserMP != null && $Id_UserMP != '')
         {
@@ -316,8 +365,44 @@ class np6_mailPerformance_Model_Observer
             // User not link now to mp 
             return;
         }
-
     }
+
+    public function HookCartSave(Varien_Event_Observer $observer)
+    {
+        Mage::log("HookCartSave Is starting !!!");
+
+        $event = $observer->getEvent();
+
+        if($event != null)
+        {
+            $customer = $event->getCustomer();
+            if($customer != null)
+            {
+                //Get the table who link user mp to magento
+                $UserLink = Mage::getModel('mailPerformance/mailPerformance')->load($customer->getId());
+                $Id_UserMP = $UserLink->getData('id_mailperf');
+
+                if($Id_UserMP != null && $Id_UserMP != '')
+                {
+                    //user allready exist we juste need to update him
+
+                    $targetinformation = $this->CreateArrayTarget($customer->getId(), $customer->getFirstname(), $customer->getLastname(), $customer->getEmail(), $customer->getGender(), $customer->getDob());
+                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/dateLastModif_field')] = new Date();
+                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartItems_field')] = new Date();
+                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartPrice_field')] = new Date();
+
+                    //Mage::getSingleton('mailPerformance/api')->UpdateTarget($targetinformation, $Id_UserMP); 
+
+                }
+                else
+                {
+                    // User not link now so we need to create it first
+                    return;
+                }
+            }
+        }
+    }
+
 
     // helper // 
 

@@ -49,12 +49,22 @@ class np6_mailPerformance_Adminhtml_IndexController extends Mage_Adminhtml_Contr
 
 		//get the columns name
 		$column_header_name = array();
-        $column_header_name[] = explode(" ", Mage::getModel('mailPerformance/system_config_source_numeric')->searchArray(Mage::getModel('mailPerformance/system_config_source_numeric')->toOptionArray(),Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/id_custormer_field')))[0];
+
+      /*  $column_header_name[] = explode(" ", Mage::getModel('mailPerformance/system_config_source_numeric')->searchArray(Mage::getModel('mailPerformance/system_config_source_numeric')->toOptionArray(),Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/id_custormer_field')))[0];
         $column_header_name[] = explode(" ", Mage::getModel('mailPerformance/system_config_source_combo_AllText')->searchArray(Mage::getModel('mailPerformance/system_config_source_combo_AllText')->toOptionArray(),Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/firstname_field')))[0];
         $column_header_name[] = explode(" ", Mage::getModel('mailPerformance/system_config_source_combo_AllText')->searchArray(Mage::getModel('mailPerformance/system_config_source_combo_AllText')->toOptionArray(),Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/lastname_field')))[0];
         $column_header_name[] = explode(" ", Mage::getModel('mailPerformance/system_config_source_combo_allList')->searchArray(Mage::getModel('mailPerformance/system_config_source_combo_allList')->toOptionArray(),Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/gender_field')))[0];
         $column_header_name[] = explode(" ", Mage::getModel('mailPerformance/system_config_source_email')->searchArray(Mage::getModel('mailPerformance/system_config_source_email')->toOptionArray(),Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/email_field')))[0];
         $column_header_name[] = explode(" ", Mage::getModel('mailPerformance/system_config_source_date')->searchArray(Mage::getModel('mailPerformance/system_config_source_date')->toOptionArray(),Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/birthday_field')))[0];
+		*/
+
+       $arrayAllField = array('email','phone','textArea','numeric','textField','date','singleSelectList','multipleSelectList','singleSelectList');
+       $allFields = Mage::getSingleton('mailPerformance/api')->getFieldType($arrayAllField);
+
+       foreach ($allFields as $key => $value) {
+      		$column_header_name[] = $value->name;
+       }
+
 
         //start file
 		$output = fopen('php://output', 'w');
@@ -81,13 +91,19 @@ class np6_mailPerformance_Adminhtml_IndexController extends Mage_Adminhtml_Contr
         	$target = Mage::getSingleton('mailPerformance/api')->getTargetWithId($value);
 
         	$row = array();
+        	
+        	foreach ($allFields as $key => $value) {
+      			$row[] = $this->FieldValue($target,$value->id);
+      		 }
+			
+			/*
         	$row[] = $this->FieldValue($target,Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/id_custormer_field'));
         	$row[] = $this->FieldValue($target,Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/firstname_field'));
         	$row[] = $this->FieldValue($target,Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/lastname_field'));
         	$row[] = $this->FieldValue($target,Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/gender_field'));
         	$row[] = $this->FieldValue($target,Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/email_field'));
         	$row[] = $this->FieldValue($target,Mage::getStoreConfig('mailPerformance_dataBinding_section/DataBinding_group/birthday_field'));
-
+			*/
 			fputcsv($output, $row, DELIMITER);
         }
         die();

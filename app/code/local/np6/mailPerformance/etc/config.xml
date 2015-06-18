@@ -168,11 +168,22 @@
               </observers>
             </customer_register_success>
 
-            
+            <!-- event creation or update cart -->
+            <checkout_cart_save_before>
+              <observers>
+                <np6_mailPerformance_checkout_cart_save_before>
+                  <type>singleton</type>
+                  <class>np6_mailPerformance_model_observer</class>
+                   <method>HookCartSave</method>
+                </np6_mailPerformance_checkout_cart_save_before>
+              </observers>
+            </checkout_cart_save_before> 
+
           </events>
 
 
-              <!-- permet au module de lire et ecrire -->
+
+          <!-- permet au module de lire et ecrire -->
           <resources>
                   <!-- connection pour ecrire -->
                   <mailPerformance_write>
