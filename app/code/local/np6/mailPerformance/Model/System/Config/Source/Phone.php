@@ -47,6 +47,12 @@ class np6_mailPerformance_Model_System_Config_Source_Phone
         }
     }
 
-
+    public function searchArray($myarray, $value) {
+          foreach ($myarray as $item) {
+            if ($item['value'] == $value)
+               return $item['label'];
+          }
+         return false;
+      }
 
 }

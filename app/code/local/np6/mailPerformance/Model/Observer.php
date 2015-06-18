@@ -16,6 +16,7 @@ class np6_mailPerformance_Model_Observer
         $advancedTab->label .= ' (test)';
 
         $adminSectionGroups = $config->getNode('sections/mailPerformance_dataBinding_section/groups');
+        $adminActionSectionGroups = $config->getNode('sections/mailPerformance_action_section/groups');
  
         if(Mage::getSingleton('mailPerformance/api')->isConnected())
         {
@@ -36,7 +37,7 @@ class np6_mailPerformance_Model_Observer
                             <source_model>mailPerformance/system_config_source_numeric</source_model>
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </id_custormer_field>                      
                         <firstname_field translate="">
@@ -45,7 +46,7 @@ class np6_mailPerformance_Model_Observer
                             <source_model>mailPerformance/system_config_source_combo_AllText</source_model>
                             <sort_order>2</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </firstname_field>
                          <lastname_field translate="">
@@ -54,7 +55,7 @@ class np6_mailPerformance_Model_Observer
                             <source_model>mailPerformance/system_config_source_combo_AllText</source_model>
                             <sort_order>2</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </lastname_field>
                         <gender_field translate="">
@@ -63,7 +64,7 @@ class np6_mailPerformance_Model_Observer
                             <source_model>mailPerformance/system_config_source_combo_allList</source_model>
                             <sort_order>3</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </gender_field>
                          <gender_Md_field translate="">
@@ -72,7 +73,7 @@ class np6_mailPerformance_Model_Observer
                             <source_model>mailPerformance/system_config_source_gender</source_model>
                             <sort_order>4</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </gender_Md_field>
                         <gender_Mr_field translate="">
@@ -81,7 +82,7 @@ class np6_mailPerformance_Model_Observer
                             <source_model>mailPerformance/system_config_source_gender</source_model>
                             <sort_order>4</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </gender_Mr_field>
                          <email_field translate="">
@@ -90,7 +91,7 @@ class np6_mailPerformance_Model_Observer
                             <source_model>mailPerformance/system_config_source_email</source_model>
                             <sort_order>5</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </email_field>
                         <birthday_field translate="">
@@ -99,45 +100,9 @@ class np6_mailPerformance_Model_Observer
                             <source_model>mailPerformance/system_config_source_date</source_model>
                             <sort_order>6</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </birthday_field>
-                         <suscriptionDate_field translate="">
-                            <label>Newsletters suscription date</label>
-                            <frontend_model>mailPerformance/adminhtml_system_config_comboBinding</frontend_model>
-                            <source_model>mailPerformance/system_config_source_date</source_model>
-                            <sort_order>6</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </suscriptionDate_field>
-                        <optin_field translate="">
-                            <label>Third party offers</label>
-                            <frontend_model>mailPerformance/adminhtml_system_config_comboBinding</frontend_model>
-                            <source_model>mailPerformance/system_config_source_combo_allList</source_model>
-                            <sort_order>7</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </optin_field>
-                        <optin_no_field translate="">
-                            <label>no</label>
-                            <frontend_model>mailPerformance/adminhtml_system_config_comboDV</frontend_model>
-                            <source_model>mailPerformance/system_config_source_optin</source_model>
-                            <sort_order>8</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </optin_no_field>
-                        <optin_yes_field translate="">
-                            <label>yes</label>
-                            <frontend_model>mailPerformance/adminhtml_system_config_comboDV</frontend_model>
-                            <source_model>mailPerformance/system_config_source_optin</source_model>
-                            <sort_order>8</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </optin_yes_field>
                     </fields>
                 </DataBinding_group>
             ');
@@ -157,16 +122,17 @@ class np6_mailPerformance_Model_Observer
                             <source_model>mailPerformance/system_config_source_userAdd</source_model>
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </User_AutoAdd_field> 
                         <segment_field translate="">
                             <label>Add on segment</label>
                             <frontend_model>mailPerformance/adminhtml_system_config_comboBinding</frontend_model>
                             <source_model>mailPerformance/system_config_source_segment</source_model>
+                            <comment><![CDATA[<a target="_blank" href="http://v8.mailperformance.com/">Need to add a segment ?</a>]]></comment>
                             <sort_order>3</sort_order>
                             <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
+                            <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </segment_field>
                     </fields>
@@ -174,11 +140,30 @@ class np6_mailPerformance_Model_Observer
             ');
 
            
-
-
+            $ExportCSV_group_xml = new Mage_Core_Model_Config_Element('
+                <ExportCSV_group translate="">
+                    <label>Export CSV</label>
+                    <sort_order>4</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                         <csv_field translate="">
+                            <label>Export des target en csv</label>
+                            <button_label>Export</button_label>
+                            <frontend_model>mailPerformance/adminhtml_system_config_exportCSV</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </csv_field> 
+                    </fields>
+                </ExportCSV_group>
+            ');
 
             $adminSectionGroups->appendChild($dataBinding_group_xml);
             $adminSectionGroups->appendChild($userLink_group_xml);
+            $adminActionSectionGroups->appendChild($ExportCSV_group_xml);
 
         }
  
@@ -201,12 +186,23 @@ class np6_mailPerformance_Model_Observer
         $DateOfBirth = $customer->getDob();
         $creationDate = $customer->getCreatedAtTimestamp();
 
+
+        //suscriber status
         $subscriber = Mage::getModel('newsletter/subscriber')->loadByEmail($email);
         $isSubscribed = false;
         if($subscriber->getId())
         {
             $isSubscribed = $subscriber->getData('subscriber_status') == Mage_Newsletter_Model_Subscriber::STATUS_SUBSCRIBED;
         }
+
+        //segment status
+        $id_segment = null;
+        $segment = Mage::getStoreConfig('mailPerformance_dataBinding_section/UserLink_group/segment_field');
+        if($segment != 0 && $segment != -1)
+        {
+            $id_segment = $segment;
+        }
+
 
         $User_AutoAdd = Mage::getStoreConfig('mailPerformance_dataBinding_section/UserLink_group/User_AutoAdd_field');
         if( $User_AutoAdd == 0)
@@ -221,7 +217,7 @@ class np6_mailPerformance_Model_Observer
             
             $targetinformation = $this->CreateArrayTarget($id, $firstname, $lastname, $email, $gender, $DateOfBirth);
 
-            Mage::getSingleton('mailPerformance/api')->CreateNewTarget($targetinformation, $id); 
+            Mage::getSingleton('mailPerformance/api')->CreateNewTarget($targetinformation, $id, $id_segment); 
         
         }
         else if ($User_AutoAdd == 2)
@@ -231,7 +227,7 @@ class np6_mailPerformance_Model_Observer
             
            $targetinformation = $this->CreateArrayTarget($id, $firstname, $lastname, $email, $gender, $DateOfBirth);
 
-            Mage::getSingleton('mailPerformance/api')->CreateNewTarget($targetinformation, $id); 
+            Mage::getSingleton('mailPerformance/api')->CreateNewTarget($targetinformation, $id, $id_segment); 
         }
         else
         {

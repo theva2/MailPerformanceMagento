@@ -47,6 +47,68 @@
             </children>
          </mailPerformance>
       </menu>
+
+      <!-- acl needed, otherwise, error 404 -->
+      <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <mailPerformance_authentification_section translate="title">
+                                        <title>Auth Section </title>
+                                        <sort_order>100</sort_order>
+                                    </mailPerformance_authentification_section>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                 </children>
+            </admin>
+        </resources>
+      </acl>
+      <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <mailPerformance_dataBinding_section translate="title">
+                                        <title>Binding Section </title>
+                                        <sort_order>200</sort_order>
+                                    </mailPerformance_dataBinding_section>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                 </children>
+            </admin>
+        </resources>
+      </acl>
+      <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <mailPerformance_action_section translate="title">
+                                        <title>Action Section </title>
+                                        <sort_order>100</sort_order>
+                                    </mailPerformance_action_section>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                 </children>
+            </admin>
+        </resources>
+      </acl>
     </adminhtml>
 
 

@@ -27,7 +27,7 @@
                     <fields>
                         <apikey_field translate="">
                             <label>Authentification key</label>
-                            <comment>API Authentification key</comment>
+                            <comment><![CDATA[<a target="_blank" href="http://v8.mailperformance.com/">Need the key ?</a>]]></comment>
                             <sort_order>2</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -63,6 +63,17 @@
             </groups>
         </mailPerformance_dataBinding_section>
 
+
+         <mailPerformance_action_section translate="">
+            <label>Action</label>
+            <sort_order>400</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <tab>mailPerformance_tab</tab>
+             <groups>
+            </groups>
+        </mailPerformance_action_section>
 
     </sections>
 </config>

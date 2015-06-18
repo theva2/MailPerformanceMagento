@@ -308,7 +308,7 @@ class np6_mailPerformance_Model_Api
 
 
 	//Add a new target in MP, need a array of field and magento id
-	public function CreateNewTarget(array $TargetInformation,$id_magento)
+	public function CreateNewTarget(array $TargetInformation,$id_magento,$id_segment = null)
 	{
 		if($this->ConnectIfNot() == false)
 		{
@@ -350,6 +350,12 @@ class np6_mailPerformance_Model_Api
 	      	$contact->addData(array('id_magento' => $id_magento, 'id_mailperf' => (string)$target_result->id));  
 	      	$contact->save();
 		}
+
+		if($id_segment != null)
+		{
+			$this->segments->setTargetInSegment($id_segment, $target_result->id);
+		}
+
 	}
 
 	//Update an existing target
@@ -394,6 +400,13 @@ class np6_mailPerformance_Model_Api
 
 		Mage::log("Customer Update, result = ".$result);
 
+	}
+
+
+	public function getTargetWithId($id)
+	{
+		Mage::log($id);
+		return $this->targets->getTargetById($id);
 	}
 
 
