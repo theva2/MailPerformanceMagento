@@ -161,9 +161,59 @@ class np6_mailPerformance_Model_Observer
                 </ExportCSV_group>
             ');
 
+            $AddSegment_group_xml = new Mage_Core_Model_Config_Element('
+                <AddSegment_group translate="">
+                    <label>Add Segment</label>
+                    <sort_order>5</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                         <name_field translate="">
+                            <label>Segment name</label>
+                            <backend_model>mailPerformance/system_config_backend_addSegment</backend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </name_field> 
+                         <description_field translate="">
+                            <label>Description</label>
+                            <backend_model>mailPerformance/system_config_backend_noSave</backend_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </description_field> 
+                        <expirationDate_field translate="">
+                            <label>Expiration date</label>
+                            <frontend_type>Text</frontend_type>
+                            <frontend_model>mailPerformance/adminhtml_system_config_date</frontend_model>
+                            <backend_model>mailPerformance/system_config_backend_noSave</backend_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </expirationDate_field>
+                         <save_field translate="">
+                            <label></label>
+                            <button_label>Sauvegarder</button_label>
+                            <frontend_model>mailPerformance/adminhtml_system_config_buttonSave</frontend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </save_field>  
+                    </fields>
+                </AddSegment_group>
+            ');
+
+            //Section Configuration
             $adminSectionGroups->appendChild($dataBinding_group_xml);
             $adminSectionGroups->appendChild($userLink_group_xml);
+            //Section Action
             $adminActionSectionGroups->appendChild($ExportCSV_group_xml);
+            $adminActionSectionGroups->appendChild($AddSegment_group_xml);
 
         }
  
