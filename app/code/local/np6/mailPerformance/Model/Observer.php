@@ -371,36 +371,39 @@ class np6_mailPerformance_Model_Observer
     {
         Mage::log("HookCartSave Is starting !!!");
 
-        $event = $observer->getEvent();
+        $customer = Mage::getSingleton('customer/session')->getCustomer();
+        $order = Mage::getModel('sales/order');
 
-        if($event != null)
+         Mage::log($order);
+
+        if($customer != null)
         {
-            $customer = $event->getCustomer();
-            if($customer != null)
+            //Get the table who link user mp to magento
+            $UserLink = Mage::getModel('mailPerformance/mailPerformance')->load($customer->getId());
+            $Id_UserMP = $UserLink->getData('id_mailperf');
+
+            if($Id_UserMP != null && $Id_UserMP != '')
             {
-                //Get the table who link user mp to magento
-                $UserLink = Mage::getModel('mailPerformance/mailPerformance')->load($customer->getId());
-                $Id_UserMP = $UserLink->getData('id_mailperf');
+                //user allready exist we juste need to update him
 
-                if($Id_UserMP != null && $Id_UserMP != '')
-                {
-                    //user allready exist we juste need to update him
+                $targetinformation = $this->CreateArrayTarget($customer->getId(), $customer->getFirstname(), $customer->getLastname(), $customer->getEmail(), $customer->getGender(), $customer->getDob());
+                Mage::log($targetinformation);
+                $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/dateLastModif_field')] = Date('YYYY-mm-dd');
+                //$targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartItems_field')] = new Date();
+                //$targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartPrice_field')] = new Date();
 
-                    $targetinformation = $this->CreateArrayTarget($customer->getId(), $customer->getFirstname(), $customer->getLastname(), $customer->getEmail(), $customer->getGender(), $customer->getDob());
-                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/dateLastModif_field')] = new Date();
-                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartItems_field')] = new Date();
-                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartPrice_field')] = new Date();
+                Mage::log($targetinformation);
 
-                    //Mage::getSingleton('mailPerformance/api')->UpdateTarget($targetinformation, $Id_UserMP); 
+                //Mage::getSingleton('mailPerformance/api')->UpdateTarget($targetinformation, $Id_UserMP); 
 
-                }
-                else
-                {
-                    // User not link now so we need to create it first
-                    return;
-                }
+            }
+            else
+            {
+                // User not link now so we need to create it in same time
+                
             }
         }
+        
     }
 
 
