@@ -335,7 +335,7 @@ class np6_mailPerformance_Model_Observer
         }
 
          Mage::log((new DateTime())->format('Y-m-d H:i:s')." CustomerRegister hook End");
-}
+    }
 
     public function customerSaveBefore(Varien_Event_Observer $observer)
     {
@@ -372,38 +372,57 @@ class np6_mailPerformance_Model_Observer
         Mage::log("HookCartSave Is starting !!!");
 
         $customer = Mage::getSingleton('customer/session')->getCustomer();
-        $order = Mage::getModel('sales/order');
 
-         Mage::log($order);
-
-        if($customer != null)
+        $event = $observer->getEvent();
+        if($event != null)
         {
-            //Get the table who link user mp to magento
-            $UserLink = Mage::getModel('mailPerformance/mailPerformance')->load($customer->getId());
-            $Id_UserMP = $UserLink->getData('id_mailperf');
-
-            if($Id_UserMP != null && $Id_UserMP != '')
+            if($customer != null)
             {
-                //user allready exist we juste need to update him
+                //Get the table who link user mp to magento
+                $UserLink = Mage::getModel('mailPerformance/mailPerformance')->load($customer->getId());
+                $Id_UserMP = $UserLink->getData('id_mailperf');
 
-                $targetinformation = $this->CreateArrayTarget($customer->getId(), $customer->getFirstname(), $customer->getLastname(), $customer->getEmail(), $customer->getGender(), $customer->getDob());
-                Mage::log($targetinformation);
-                $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/dateLastModif_field')] = Date('YYYY-mm-dd');
-                //$targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartItems_field')] = new Date();
-                //$targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartPrice_field')] = new Date();
+                $order = Mage::getSingleton('checkout/session')->getQuote();
+                $countItem = 0;
+                $amount = 0;
+                foreach ($order->getAllItems() as $item)
+                {
+                    $countItem += $item->getQty();
+                    $amount += ($item->getPrice() * $item->getQty());
+                }
 
-                Mage::log($targetinformation);
+                $id_segment = Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/segment_field');
+                if(($id_segment == -1 ) || ($id_segment == 0))
+                {
+                    $id_segment = null;
+                }
+            
+                if($Id_UserMP != null && $Id_UserMP != '')
+                {
+                    //user allready exist we juste need to update him
+                    Mage::log("user update");
 
-                //Mage::getSingleton('mailPerformance/api')->UpdateTarget($targetinformation, $Id_UserMP); 
+                    $targetinformation = $this->CreateArrayTarget($customer->getId(), $customer->getFirstname(), $customer->getLastname(), $customer->getEmail(), $customer->getGender(), $customer->getDob());
+                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/dateLastModif_field')] = 'ISODate("'.date('Y-m-d\TH:i:s\Z').'")';
+                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartItems_field')] = $countItem;
+                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartPrice_field')] = strval($amount);
 
-            }
-            else
-            {
-                // User not link now so we need to create it in same time
-                
+                    Mage::getSingleton('mailPerformance/api')->UpdateTarget($targetinformation, $Id_UserMP, $id_segment);
+                }
+                else
+                {
+                    // User not link now so we need to create it in same time
+                    Mage::log("user creation");
+
+                    $targetinformation = $this->CreateArrayTarget($customer->getId(), $customer->getFirstname(), $customer->getLastname(), $customer->getEmail(), $customer->getGender(), $customer->getDob());
+                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/dateLastModif_field')] = 'ISODate("'.date('Y-m-d\TH:i:s\Z').'")';
+                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartItems_field')] = (int)$countItem;
+                    $targetinformation[Mage::getStoreConfig('mailPerformance_dataBinding_section/Event_UpdateCart_group/cartPrice_field')] = strval($amount);
+                    
+                    Mage::getSingleton('mailPerformance/api')->CreateNewTarget($targetinformation, $customer->getId(), $id_segment); 
+                }
             }
         }
-        
     }
 
 

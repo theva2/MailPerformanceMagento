@@ -359,7 +359,7 @@ class np6_mailPerformance_Model_Api
 	}
 
 	//Update an existing target
-	public function UpdateTarget(array $TargetInformation,$id_mp)
+	public function UpdateTarget(array $TargetInformation,$id_mp, $id_segment = null)
 	{
 		if($this->ConnectIfNot() == false)
 		{
@@ -393,13 +393,12 @@ class np6_mailPerformance_Model_Api
 			}
 		}
 
-		 Mage::log("Customer Update, id mp = ".$id_mp);
-		 Mage::log("Customer Update, send array = ".$send_array);
-
 		$result = $this->targets->updateTargetFromValues($id_mp, $send_array);
 
-		Mage::log("Customer Update, result = ".$result);
-
+		if($id_segment != null)
+		{
+			$this->segments->setTargetInSegment($id_segment, $result->id);
+		}
 	}
 
 
