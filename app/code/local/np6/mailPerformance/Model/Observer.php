@@ -13,7 +13,7 @@ class np6_mailPerformance_Model_Observer
         //get tab 'advanced', change sort order and label
         $advancedTab = $config->getNode('tabs/mailPerformance_tab');
         $advancedTab->sort_order = 2;
-        $advancedTab->label .= ' (test)';
+
 
         $adminSectionGroups = $config->getNode('sections/mailPerformance_dataBinding_section/groups');
         $adminActionSectionGroups = $config->getNode('sections/mailPerformance_action_section/groups');
