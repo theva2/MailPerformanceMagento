@@ -258,8 +258,7 @@ class np6_mailPerformance_Model_Observer
                 </AddSegment_group>
             ');
 
-            $FormulaireIntegre_group_xml = new Mage_Core_Model_Config_Element('
-                <FormulaireIntegre_group translate="">
+             $afficheForm = '<FormulaireIntegre_group translate="">
                     <label>Formulaire Intégré</label>
                     <sort_order>60</sort_order>
                     <show_in_default>1</show_in_default>
@@ -275,18 +274,64 @@ class np6_mailPerformance_Model_Observer
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </position_field>
-                        <typeForm_field>
-                            <label>type de formulaire :</label>
-                            <frontend_type>select</frontend_type>
-                            <source_model>mailPerformance/system_config_source_form</source_model>
+                        <titre_field>
+                            <label>Titre:</label>
+                            <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                        </titre_field>
+                        <typeForm_field>
+                            <label>type de formulaire :</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mailPerformance/system_config_source_form</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
                         </typeForm_field>
-                    </fields>
-                </FormulaireIntegre_group>
-            ');
+                        <afficheForm_field>
+                            <label>Afficher le formulaire:</label>
+                            <frontend_model>mailPerformance/adminhtml_system_config_radioButon</frontend_model>
+                            <source_model>mailPerformance/system_config_source_afficheForm</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </afficheForm_field>                        ';
+
+            if(Mage::getStoreConfig('mailPerformance_formulaire_section/FormulaireIntegre_group/afficheForm_field') == 0)
+            {
+                $afficheForm.=
+                        '<hauteur_field>
+                            <label>Hauteur du formulaire</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </hauteur_field>';                
+            }
+            else if(Mage::getStoreConfig('mailPerformance_formulaire_section/FormulaireIntegre_group/afficheForm_field') == 1)
+            {
+                $afficheForm.=
+                        '<textButton_field>
+                            <label>Text du bouton</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </textButton_field>';        
+            }
+
+            $afficheForm.=
+
+                    '</fields>
+                </FormulaireIntegre_group>';
+
+            $FormulaireIntegre_group_xml = new Mage_Core_Model_Config_Element($afficheForm);
 
             $FormulairePageDedie_group_xml = new Mage_Core_Model_Config_Element('
                 <FormulairePageDedie_group translate="">
