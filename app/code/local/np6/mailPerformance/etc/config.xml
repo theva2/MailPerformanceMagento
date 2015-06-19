@@ -25,29 +25,6 @@
     <!-- System>configuration panel-->
     <adminhtml>
 
-        <!-- admin layout -->
-      <layout>
-            <updates>
-              <mailPerformance>
-               <file>mailPerformance.xml</file>
-              </mailPerformance>
-            </updates>
-      </layout>
-
-      <!-- admin top bar onglet  -->
-     <menu>
-        <mailPerformance translate="title" module="adminhtml">
-           <title>MailPerformance</title>
-           <sort_order>100</sort_order>
-           <children>
-               <set_time>
-                     <title>test</title>
-                     <action>adminMP/adminhtml_index</action>
-                </set_time>
-            </children>
-         </mailPerformance>
-      </menu>
-
       <!-- acl needed, otherwise, error 404 -->
       <acl>
         <resources>
@@ -99,7 +76,7 @@
                                 <children>
                                     <mailPerformance_action_section translate="title">
                                         <title>Action Section </title>
-                                        <sort_order>100</sort_order>
+                                        <sort_order>300</sort_order>
                                     </mailPerformance_action_section>
                                 </children>
                             </config>
@@ -109,8 +86,27 @@
             </admin>
         </resources>
       </acl>
+       <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <mailPerformance_formulaire_section translate="title">
+                                        <title>Formulaire section</title>
+                                        <sort_order>400</sort_order>
+                                    </mailPerformance_formulaire_section>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                 </children>
+            </admin>
+        </resources>
+      </acl>
     </adminhtml>
-
 
     <!-- global neded information -->
     <global>

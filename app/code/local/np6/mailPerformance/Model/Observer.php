@@ -17,6 +17,7 @@ class np6_mailPerformance_Model_Observer
 
         $adminSectionGroups = $config->getNode('sections/mailPerformance_dataBinding_section/groups');
         $adminActionSectionGroups = $config->getNode('sections/mailPerformance_action_section/groups');
+        $adminFormulaireSectionGroups = $config->getNode('sections/mailPerformance_formulaire_section/groups');
  
         if(Mage::getSingleton('mailPerformance/api')->isConnected())
         {
@@ -257,6 +258,27 @@ class np6_mailPerformance_Model_Observer
                 </AddSegment_group>
             ');
 
+            $FormulaireIntegre_group_xml = new Mage_Core_Model_Config_Element('
+                <FormulaireIntegre_group translate="">
+                    <label>Formulaire Intégré</label>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <position_field>
+                            <label>Position du formulaire :</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>mailPerformance/system_config_source_positionForm</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </position_field>
+                    </fields>
+                </FormulaireIntegre_group>
+            ');
+
             //Section Configuration
             $adminSectionGroups->appendChild($dataBinding_group_xml);
             $adminSectionGroups->appendChild($userLink_group_xml);
@@ -264,6 +286,8 @@ class np6_mailPerformance_Model_Observer
             //Section Action
             $adminActionSectionGroups->appendChild($ExportCSV_group_xml);
             $adminActionSectionGroups->appendChild($AddSegment_group_xml);
+            //section formlaire
+            $adminFormulaireSectionGroups->appendChild($FormulaireIntegre_group_xml);
 
         }
  
