@@ -12,6 +12,9 @@ require_once (__Dir__.'/SegmentsConnector.class.php');
 require_once (__Dir__.'/modelMP/Segment.class.php');
 require_once (__Dir__.'/modelMP/Target.class.php');
 require_once (__Dir__.'/TargetsConnector.class.php');
+require_once (__Dir__.'/modelMP/Form.class.php');
+require_once (__Dir__.'/modelMP/FormDetail.class.php');
+require_once (__Dir__.'/FormsConnector.class.php');
 
 
 
@@ -28,6 +31,7 @@ class np6_mailPerformance_Model_Api
 	var $value_list;
 	var $segments;
 	var $targets;
+	var $forms;
 
 
 	public function __construct()
@@ -46,6 +50,7 @@ class np6_mailPerformance_Model_Api
 		$this->value_list = new ValueListConnector($this->rest_client);
 		$this->segments = new SegmentsConnector($this->rest_client);
 		$this->targets = new TargetsConnector($this->rest_client);
+		$this->forms = new FormsConnector($this->rest_client);
 
 	}
 
@@ -412,5 +417,9 @@ class np6_mailPerformance_Model_Api
 		return $this->segments->createSegment($segment);
 	}
 
+	public function getListForm($arrayType)
+	{
+		return $this->forms->getListFormByTypes($arrayType);
+	}
 
 }

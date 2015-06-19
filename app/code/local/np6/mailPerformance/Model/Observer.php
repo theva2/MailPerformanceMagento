@@ -275,6 +275,15 @@ class np6_mailPerformance_Model_Observer
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </position_field>
+                        <typeForm_field>
+                            <label>type de formulaire :</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mailPerformance/system_config_source_form</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </typeForm_field>
                     </fields>
                 </FormulaireIntegre_group>
             ');

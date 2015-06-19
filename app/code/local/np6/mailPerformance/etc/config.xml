@@ -25,7 +25,7 @@
     <!-- System>configuration panel-->
     <adminhtml>
 
-      <!-- acl needed, otherwise, error 404 -->
+      <!-- acl needed, otherwise, error 404 on first load-->
       <acl>
         <resources>
             <admin>
