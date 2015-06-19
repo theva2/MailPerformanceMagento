@@ -288,6 +288,54 @@ class np6_mailPerformance_Model_Observer
                 </FormulaireIntegre_group>
             ');
 
+            $FormulairePageDedie_group_xml = new Mage_Core_Model_Config_Element('
+                <FormulairePageDedie_group translate="">
+                    <label>Formulaire sur page dédié</label>
+                    <sort_order>70</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <pageExistantes_field>
+                            <label>Page existante :</label>
+                            <frontend_model>mailPerformance/adminhtml_system_config_formCms</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </pageExistantes_field>
+                        <nomFormulaire_field>
+                            <label>nom du nouveau formulaire</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>mailPerformance/system_config_backend_AddFormCms</backend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </nomFormulaire_field>
+                        <typeForm_field>
+                            <label>type de formulaire :</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mailPerformance/system_config_source_formAll</source_model>
+                            <backend_model>mailPerformance/system_config_backend_noSave</backend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </typeForm_field>
+                        <save_field translate="">
+                            <label></label>
+                            <button_label>Sauvegarder</button_label>
+                            <frontend_model>mailPerformance/adminhtml_system_config_buttonSave</frontend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </save_field> 
+                    </fields>
+                </FormulairePageDedie_group>
+            ');
+
             //Section Configuration
             $adminSectionGroups->appendChild($dataBinding_group_xml);
             $adminSectionGroups->appendChild($userLink_group_xml);
@@ -297,6 +345,7 @@ class np6_mailPerformance_Model_Observer
             $adminActionSectionGroups->appendChild($AddSegment_group_xml);
             //section formlaire
             $adminFormulaireSectionGroups->appendChild($FormulaireIntegre_group_xml);
+            $adminFormulaireSectionGroups->appendChild($FormulairePageDedie_group_xml);
 
         }
  
@@ -499,8 +548,5 @@ class np6_mailPerformance_Model_Observer
 
         return $targetinformation;
     }
-
-    
-
 }
 

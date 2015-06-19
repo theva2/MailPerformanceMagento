@@ -77,6 +77,7 @@ class FormsConnector extends APIConnector
 			if ($this->getForms() == null)
 				return null;
 
+		Mage::log($this->list_forms);
 		$return_list = array ();
 		foreach ($this->list_forms as $form)
 			if (in_array($form->type, $type) && (!$valid_only || $form->state == FORM_STATE_VALID))
